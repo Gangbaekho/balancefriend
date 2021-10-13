@@ -18,7 +18,7 @@ public class Todo extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private Boolean completed;
+    private Boolean completed = false;
     private LocalDateTime completedAt;
 
     @ManyToOne(fetch = FetchType.EAGER)
