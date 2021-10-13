@@ -5,6 +5,8 @@ import com.example.balancefriend.domain.todo.TodoRepository;
 import com.example.balancefriend.domain.user.User;
 import com.example.balancefriend.domain.user.UserRepository;
 import com.example.balancefriend.dto.TodoDeleteResponseDto;
+import com.example.balancefriend.dto.TodoUpdateRequestDto;
+import com.example.balancefriend.dto.TodoUpdateResponseDto;
 import com.example.balancefriend.security.JwtTokenProvider;
 import com.example.balancefriend.security.UserPrincipal;
 import org.junit.After;
@@ -24,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class TodoControllerDeleteTodoTest {
+public class TodoControllerUpdateTodoTest {
 
     @LocalServerPort
     private int port;
@@ -90,44 +92,30 @@ public class TodoControllerDeleteTodoTest {
     }
 
     @Test
-    public void 투두_삭제_성공케이스(){
+    public void 투두_이름_업데이트_성공케이스(){
+
+        String updated = "updated";
 
         Todo todo = todoRepository.findAll().get(0);
 
-        String deleteUrl = "http://localhost:" + port + "/todos/" + todo.getId();
+        TodoUpdateRequestDto requestDto = TodoUpdateRequestDto.builder()
+                .name(updated)
+                .todoId(todo.getId())
+                .build();
 
-        HttpHeaders deleteHeaders = new HttpHeaders();
-        deleteHeaders.setContentType(MediaType.APPLICATION_JSON);
-        deleteHeaders.set("Authorization","Bearer "+tokenOne);
-        HttpEntity<Object> deleteRequestEntity = new HttpEntity<>(null,deleteHeaders);
+        String updateUrl = "http://localhost:" + port + "/todos";
 
-        ResponseEntity<TodoDeleteResponseDto> deleteResponseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE,deleteRequestEntity,TodoDeleteResponseDto.class);
-        assertThat(deleteResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        HttpHeaders updateHeaders = new HttpHeaders();
+        updateHeaders.setContentType(MediaType.APPLICATION_JSON);
+        updateHeaders.set("Authorization","Bearer "+tokenOne);
+        HttpEntity<TodoUpdateRequestDto> updateRequestEntity = new HttpEntity<>(requestDto,updateHeaders);
 
-        List<Todo> todos = todoRepository.findAll();
-        assertThat(todos.size()).isEqualTo(0);
-    }
-
-    @Test
-    public void 다른유저가_삭제요청을_한_경우(){
-
-        Todo todo = todoRepository.findAll().get(0);
-
-        String deleteUrl = "http://localhost:" + port + "/todos/" + todo.getId();
-
-        HttpHeaders deleteHeaders = new HttpHeaders();
-        deleteHeaders.setContentType(MediaType.APPLICATION_JSON);
-        deleteHeaders.set("Authorization","Bearer "+tokenTwo);
-        HttpEntity<Object> deleteRequestEntity = new HttpEntity<>(null,deleteHeaders);
-
-        ResponseEntity<TodoDeleteResponseDto> deleteResponseEntity = restTemplate.exchange(deleteUrl, HttpMethod.DELETE,deleteRequestEntity,TodoDeleteResponseDto.class);
-        assertThat(deleteResponseEntity.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
+        ResponseEntity<TodoUpdateResponseDto> updateResponseEntity = restTemplate.exchange(updateUrl, HttpMethod.PUT,updateRequestEntity,TodoUpdateResponseDto.class);
+        assertThat(updateResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         List<Todo> todos = todoRepository.findAll();
-        assertThat(todos.size()).isEqualTo(1);
+        assertThat(todos.get(0).getName()).isEqualTo(updated);
     }
-
-
 
     @After
     public void cleanup(){
