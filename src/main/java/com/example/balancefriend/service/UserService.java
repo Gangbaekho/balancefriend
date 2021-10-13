@@ -38,6 +38,7 @@ public class UserService {
 
         User user = User.builder()
                 .name(requestDto.getName())
+                .password(passwordEncoder.encode(requestDto.getPassword()))
                 .age(requestDto.getAge())
                 .build();
 
@@ -52,7 +53,7 @@ public class UserService {
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         requestDto.getName(),
-                        requestDto.getName()
+                        requestDto.getPassword()
                 )
         );
 

@@ -18,13 +18,15 @@ public class UserPrincipal implements UserDetails {
 
     private Long id;
     private String name;
+    private String password;
     private int age;
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String name,int age, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String name,String password ,int age, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
+        this.password = password;
         this.age = age;
         this.authorities = authorities;
     }
@@ -35,6 +37,7 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(
                 user.getId(),
                 user.getName(),
+                user.getPassword(),
                 user.getAge(),
                 authorities
         );
@@ -47,7 +50,7 @@ public class UserPrincipal implements UserDetails {
 
     @Override
     public String getPassword() {
-        return name;
+        return password;
     }
 
     @Override

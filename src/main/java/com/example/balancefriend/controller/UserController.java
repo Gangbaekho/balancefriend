@@ -18,13 +18,13 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("")
+    @PostMapping("/signup")
     public UserCreateResponseDto signupUser(@RequestBody UserCreateRequestDto requestDto){
 
         return userService.signupUser(requestDto);
     }
 
-    @PostMapping("")
+    @PostMapping("/signin")
     public UserSigninResponseDto signinUser(@RequestBody UserSigninRequestDto requestDto){
 
         return userService.signinUser(requestDto);

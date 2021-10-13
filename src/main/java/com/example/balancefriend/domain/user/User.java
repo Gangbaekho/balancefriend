@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +25,19 @@ public class User extends BaseTimeEntity {
     @Column(unique = true)
     private String name;
 
-    @Size(min = 0, max = 150)
+    private String password;
+
+    @Min(0)
+    @Max(150)
     private int age;
 
     @OneToMany(mappedBy = "user")
     private List<Todo> todos = new ArrayList<>();
 
     @Builder
-    public User(String name, int age) {
+    public User(String name,String password ,int age) {
         this.name = name;
+        this.password = password;
         this.age = age;
     }
 }

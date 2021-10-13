@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 public class UserSigninRequestDto {
 
     private String name;
+    private String password;
 
     @Builder
-    public UserSigninRequestDto(String name) {
+    public UserSigninRequestDto(String name, String password) {
         this.name = name;
+        this.password = password;
     }
 }
