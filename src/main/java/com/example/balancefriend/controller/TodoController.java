@@ -25,7 +25,7 @@ public class TodoController {
     @GetMapping("/list/full")
     public List<TodoGetFullResponseDto> getListFullTodos(@CurrentUser UserPrincipal userPrincipal){
 
-        return todoService.getListFullTodo(userPrincipal.getId());
+        return todoService.getListFullTodos(userPrincipal.getId());
     }
 
     @GetMapping("/{todoId}/partial")
