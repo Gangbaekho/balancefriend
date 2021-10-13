@@ -72,7 +72,7 @@ public class UserControllerUserSignupTest {
 
         HttpHeaders postHeaders = new HttpHeaders();
         postHeaders.setContentType(MediaType.APPLICATION_JSON);
-        postHeaders.set("Authorization","Token "+token);
+        postHeaders.set("Authorization","Bearer "+token);
         HttpEntity<UserCreateRequestDto> postRequestEntity = new HttpEntity<>(requestDto,postHeaders);
 
         ResponseEntity<UserCreateResponseDto> postResponseEntity = restTemplate.exchange(postUrl, HttpMethod.POST,postRequestEntity,UserCreateResponseDto.class);
@@ -99,7 +99,7 @@ public class UserControllerUserSignupTest {
 
         HttpHeaders postHeaders = new HttpHeaders();
         postHeaders.setContentType(MediaType.APPLICATION_JSON);
-        postHeaders.set("Authorization","Token "+token);
+        postHeaders.set("Authorization","Bearer "+token);
         HttpEntity<UserCreateRequestDto> postRequestEntity = new HttpEntity<>(requestDto,postHeaders);
 
         ResponseEntity<UserCreateResponseDto> postResponseEntity = restTemplate.exchange(postUrl, HttpMethod.POST,postRequestEntity,UserCreateResponseDto.class);
@@ -126,7 +126,7 @@ public class UserControllerUserSignupTest {
 
         HttpHeaders postHeaders = new HttpHeaders();
         postHeaders.setContentType(MediaType.APPLICATION_JSON);
-        postHeaders.set("Authorization","Token "+token);
+        postHeaders.set("Authorization","Bearer "+token);
         HttpEntity<UserCreateRequestDto> postRequestEntity = new HttpEntity<>(requestDto,postHeaders);
 
         ResponseEntity<UserCreateResponseDto> postResponseEntity = restTemplate.exchange(postUrl, HttpMethod.POST,postRequestEntity,UserCreateResponseDto.class);
