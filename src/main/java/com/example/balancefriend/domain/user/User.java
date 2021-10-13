@@ -31,7 +31,7 @@ public class User extends BaseTimeEntity {
     @Max(150)
     private int age;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch =  FetchType.LAZY)
     private List<Todo> todos = new ArrayList<>();
 
     @Builder

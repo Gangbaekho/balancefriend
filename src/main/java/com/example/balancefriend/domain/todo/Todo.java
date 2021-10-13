@@ -18,10 +18,10 @@ public class Todo extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
-    private boolean completed;
+    private Boolean completed;
     private LocalDateTime completedAt;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "USER_ID")
     private User user;
 
@@ -35,6 +35,11 @@ public class Todo extends BaseTimeEntity {
     public void updateUser(User user){
 
         this.user = user;
+    }
+
+    public void updateName(String name){
+
+        this.name = name;
     }
 
 }
