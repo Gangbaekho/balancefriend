@@ -11,8 +11,8 @@ import java.util.Map;
 @ControllerAdvice
 public class ExceptionHandlingController {
 
-    @ExceptionHandler(CUserAlreadyExistException.class)
-    public ResponseEntity<?> handleConflictException (CUserAlreadyExistException e){
+    @ExceptionHandler(CUserNotFoundException.class)
+    public ResponseEntity<?> handleCUserNotFoundException (CUserNotFoundException e){
 
         Map<String,String> message = new HashMap<>();
         message.put("message",e.getMessage());
