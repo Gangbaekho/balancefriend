@@ -47,4 +47,9 @@ public class Todo extends BaseTimeEntity {
         this.completed = true;
     }
 
+    public void updateCompletedAt(){
+
+        this.completedAt = LocalDateTime.now();
+    }
+
 }

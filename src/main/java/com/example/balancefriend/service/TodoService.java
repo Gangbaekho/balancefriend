@@ -132,6 +132,7 @@ public class TodoService {
         }
 
         todo.updateComplete();
+        todo.updateCompletedAt();
 
         return new TodoCompleteResponseDto(todo);
     }

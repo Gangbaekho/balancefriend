@@ -5,7 +5,6 @@ import com.example.balancefriend.domain.todo.TodoRepository;
 import com.example.balancefriend.domain.user.User;
 import com.example.balancefriend.domain.user.UserRepository;
 import com.example.balancefriend.dto.TodoCompleteResponseDto;
-import com.example.balancefriend.dto.TodoGetFullResponseDto;
 import com.example.balancefriend.security.JwtTokenProvider;
 import com.example.balancefriend.security.UserPrincipal;
 import org.junit.After;
@@ -18,9 +17,6 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.*;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
