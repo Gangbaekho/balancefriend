@@ -7,7 +7,9 @@ import com.example.balancefriend.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @RequestMapping("/todos")
@@ -23,7 +25,9 @@ public class TodoController {
     }
 
     @GetMapping("/list/full")
-    public List<TodoGetFullResponseDto> getListFullTodos(@CurrentUser UserPrincipal userPrincipal){
+    public List<TodoGetFullResponseDto> getListFullTodos(@CurrentUser UserPrincipal userPrincipal,
+                                                         @RequestParam(required = false) Long skip,
+                                                         @RequestParam(required = false) Long limit){
 
         return todoService.getListFullTodos(userPrincipal.getId());
     }
@@ -35,7 +39,9 @@ public class TodoController {
     }
 
     @GetMapping("/list/partial")
-    public List<TodoGetPartialResponseDto> getListPartialTodos(@CurrentUser UserPrincipal userPrincipal){
+    public List<TodoGetPartialResponseDto> getListPartialTodos(@CurrentUser UserPrincipal userPrincipal,
+                                                               @RequestParam(required = false) Long skip,
+                                                               @RequestParam(required = false) Long limit){
 
         return todoService.getListPartialTodos(userPrincipal.getId());
     }
@@ -63,4 +69,5 @@ public class TodoController {
 
         return todoService.completeTodo(userPrincipal.getId(),todoId);
     }
+
 }
