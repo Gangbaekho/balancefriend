@@ -124,6 +124,42 @@ public class TodoControllerGetTodoTest {
     }
 
     @Test
+    public void 투두_리스트_모든필드_패치_스킵_성공케이스(){
+
+        String getUrl = "http://localhost:" + port + "/todos/list/full?skip=1";
+
+        HttpHeaders getHeaders = new HttpHeaders();
+        getHeaders.setContentType(MediaType.APPLICATION_JSON);
+        getHeaders.set("Authorization","Bearer "+tokenOne);
+        HttpEntity<Object> getRequestEntity = new HttpEntity<>(null,getHeaders);
+
+        ResponseEntity<List> getResponseEntity = restTemplate.exchange(getUrl, HttpMethod.GET,getRequestEntity,List.class);
+        assertThat(getResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getResponseEntity.getBody().size()).isEqualTo(1);
+
+        Map<String,Object> element = (Map<String,Object>) getResponseEntity.getBody().get(0);
+        assertThat(element.get("createdAt")).isNotNull();
+    }
+
+    @Test
+    public void 투두_리스트_모든필드_패치_리밋_성공케이스(){
+
+        String getUrl = "http://localhost:" + port + "/todos/list/full?limit=1";
+
+        HttpHeaders getHeaders = new HttpHeaders();
+        getHeaders.setContentType(MediaType.APPLICATION_JSON);
+        getHeaders.set("Authorization","Bearer "+tokenOne);
+        HttpEntity<Object> getRequestEntity = new HttpEntity<>(null,getHeaders);
+
+        ResponseEntity<List> getResponseEntity = restTemplate.exchange(getUrl, HttpMethod.GET,getRequestEntity,List.class);
+        assertThat(getResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getResponseEntity.getBody().size()).isEqualTo(1);
+
+        Map<String,Object> element = (Map<String,Object>) getResponseEntity.getBody().get(0);
+        assertThat(element.get("createdAt")).isNotNull();
+    }
+
+    @Test
     public void 투두_싱글_일부필드_패치_성공케이스(){
 
         Todo todo = todoRepository.findAll().get(0);
@@ -158,6 +194,42 @@ public class TodoControllerGetTodoTest {
         ResponseEntity<List> getResponseEntity = restTemplate.exchange(getUrl, HttpMethod.GET,getRequestEntity,List.class);
         assertThat(getResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(getResponseEntity.getBody().size()).isEqualTo(2);
+
+        Map<String,Object> element = (Map<String,Object>) getResponseEntity.getBody().get(0);
+        assertThat(element.get("createdAt")).isNull();
+    }
+
+    @Test
+    public void 투두_리스트_일부필드_패치_리밋_성공케이스(){
+
+        String getUrl = "http://localhost:" + port + "/todos/list/partial?limit=1";
+
+        HttpHeaders getHeaders = new HttpHeaders();
+        getHeaders.setContentType(MediaType.APPLICATION_JSON);
+        getHeaders.set("Authorization","Bearer "+tokenOne);
+        HttpEntity<Object> getRequestEntity = new HttpEntity<>(null,getHeaders);
+
+        ResponseEntity<List> getResponseEntity = restTemplate.exchange(getUrl, HttpMethod.GET,getRequestEntity,List.class);
+        assertThat(getResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getResponseEntity.getBody().size()).isEqualTo(1);
+
+        Map<String,Object> element = (Map<String,Object>) getResponseEntity.getBody().get(0);
+        assertThat(element.get("createdAt")).isNull();
+    }
+
+    @Test
+    public void 투두_리스트_일부필드_패치_스킵_성공케이스(){
+
+        String getUrl = "http://localhost:" + port + "/todos/list/partial?skip=1";
+
+        HttpHeaders getHeaders = new HttpHeaders();
+        getHeaders.setContentType(MediaType.APPLICATION_JSON);
+        getHeaders.set("Authorization","Bearer "+tokenOne);
+        HttpEntity<Object> getRequestEntity = new HttpEntity<>(null,getHeaders);
+
+        ResponseEntity<List> getResponseEntity = restTemplate.exchange(getUrl, HttpMethod.GET,getRequestEntity,List.class);
+        assertThat(getResponseEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getResponseEntity.getBody().size()).isEqualTo(1);
 
         Map<String,Object> element = (Map<String,Object>) getResponseEntity.getBody().get(0);
         assertThat(element.get("createdAt")).isNull();
