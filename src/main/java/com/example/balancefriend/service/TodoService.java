@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -36,10 +37,21 @@ public class TodoService {
                 .orElseThrow(() -> new CUserNotFoundException("user not found id :" + userId));
 
 
-        Todo todo = Todo.builder()
-                .completed(false)
-                .name(requestDto.getName())
-                .build();
+        Todo todo;
+        if(requestDto.isCompleted()){
+
+            todo = Todo.builder()
+                    .name(requestDto.getName())
+                    .completed(requestDto.isCompleted())
+                    .completedAt(LocalDateTime.now())
+                    .build();
+        }else{
+
+            todo = Todo.builder()
+                    .name(requestDto.getName())
+                    .completed(requestDto.isCompleted())
+                    .build();
+        }
 
         todo.updateUser(user);
 

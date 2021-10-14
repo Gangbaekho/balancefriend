@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 public class TodoGetPartialResponseDto {
 
     private String name;
-    private Boolean completed;
+    private boolean completed;
 
     public TodoGetPartialResponseDto(Todo todo) {
         this.name = todo.getName();

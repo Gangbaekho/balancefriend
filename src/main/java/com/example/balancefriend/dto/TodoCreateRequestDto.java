@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 public class TodoCreateRequestDto {
 
     private String name;
+    private boolean completed;
 
     @Builder
-    public TodoCreateRequestDto(String name) {
+    public TodoCreateRequestDto(String name, boolean completed) {
         this.name = name;
+        this.completed = completed;
     }
 }
