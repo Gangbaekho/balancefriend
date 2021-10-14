@@ -8,16 +8,23 @@ import com.example.balancefriend.dto.*;
 import com.example.balancefriend.exception.CTodoNotFoundException;
 import com.example.balancefriend.exception.CUserAuthorizationException;
 import com.example.balancefriend.exception.CUserNotFoundException;
+import com.example.balancefriend.util.OffsetBasedPageRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
 public class TodoService {
+
+
+    private static final Integer DEFAULT_SKIP = 0;
+    private static final Integer DEFAULT_LIMIT = 100;
 
     private final UserRepository userRepository;
     private final TodoRepository todoRepository;
@@ -98,9 +105,18 @@ public class TodoService {
     }
 
     @Transactional(readOnly = true)
-    public List<TodoGetFullResponseDto> getListFullTodos(Long userId){
+    public List<TodoGetFullResponseDto> getListFullTodos(Long userId, Integer skip, Integer limit){
 
-        List<Todo> todos = todoRepository.findByUserIdDesc(userId);
+        if(Objects.isNull(skip)){
+            skip = DEFAULT_SKIP;
+        }
+
+        if(Objects.isNull(limit)){
+            limit = DEFAULT_LIMIT;
+        }
+
+        Pageable pageable = new OffsetBasedPageRequest(limit, skip);
+        List<Todo> todos = todoRepository.findByUserIdWithOffsetAndLimit(userId, pageable);
 
         List<TodoGetFullResponseDto> responseDtos = todos.stream()
                         .map(todo -> new TodoGetFullResponseDto(todo))
@@ -110,9 +126,18 @@ public class TodoService {
     }
 
     @Transactional(readOnly = true)
-    public List<TodoGetPartialResponseDto> getListPartialTodos(Long userId){
+    public List<TodoGetPartialResponseDto> getListPartialTodos(Long userId, Integer skip, Integer limit){
 
-        List<Todo> todos = todoRepository.findByUserIdDesc(userId);
+        if(Objects.isNull(skip)){
+            skip = DEFAULT_SKIP;
+        }
+
+        if(Objects.isNull(limit)){
+            limit = DEFAULT_LIMIT;
+        }
+
+        Pageable pageable = new OffsetBasedPageRequest(limit, skip);
+        List<Todo> todos = todoRepository.findByUserIdWithOffsetAndLimit(userId, pageable);
 
         List<TodoGetPartialResponseDto> responseDtos = todos.stream()
                 .map(todo -> new TodoGetPartialResponseDto(todo))
