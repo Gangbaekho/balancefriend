@@ -57,4 +57,10 @@ public class TodoController {
 
         return todoService.deleteTodo(userPrincipal.getId(),todoId);
     }
+
+    @PostMapping("/{todoId}/complete")
+    public TodoCompleteResponseDto completeTodo(@CurrentUser UserPrincipal userPrincipal, @PathVariable(value = "todoId") Long todoId){
+
+        return todoService.completeTodo(userPrincipal.getId(),todoId);
+    }
 }

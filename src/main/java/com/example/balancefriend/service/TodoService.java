@@ -120,4 +120,19 @@ public class TodoService {
 
         return responseDtos;
     }
+
+    @Transactional
+    public TodoCompleteResponseDto completeTodo(Long userId, Long todoId){
+
+        Todo todo = todoRepository.findById(todoId)
+                .orElseThrow(()-> new CTodoNotFoundException("todo not found id : " + todoId));
+
+        if(!userId.equals(todo.getUser().getId())){
+            throw new CUserAuthorizationException("user doesnt have authorization.");
+        }
+
+        todo.updateComplete();
+
+        return new TodoCompleteResponseDto(todo);
+    }
 }

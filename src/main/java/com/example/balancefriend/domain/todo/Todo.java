@@ -42,4 +42,9 @@ public class Todo extends BaseTimeEntity {
         this.name = name;
     }
 
+    public void updateComplete(){
+
+        this.completed = true;
+    }
+
 }
